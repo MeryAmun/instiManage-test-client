@@ -8,8 +8,10 @@ import {
 } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+
 import { TiPlus } from "react-icons/ti";
+import { Link } from 'react-router-dom'
+
 
 const Navbar = ({ active, setActive, currentLocation }) => {
   return (
@@ -45,10 +47,14 @@ const Navbar = ({ active, setActive, currentLocation }) => {
       </Paper>
       <Box className="navbar__header">
         <h2 className="navbar__title">{currentLocation}</h2>
-        <Button variant="contained" className="navbar__btn">
+        {
+          currentLocation ==="Exchanges" && (
+            <Link  to="/create-exchange"  className="navbar__btn">
           <TiPlus size={20} color="#fff" />
           {currentLocation}
-        </Button>
+        </Link>
+          )
+        }
       </Box>
     </div>
   );

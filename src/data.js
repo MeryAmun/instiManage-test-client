@@ -6,23 +6,22 @@ import { ImFileText } from 'react-icons/im'
 import { BiRadioCircle } from 'react-icons/bi'
 import { SiFacebookgaming } from 'react-icons/si'
 import { MdEditNote ,MdDelete,MdNewLabel } from 'react-icons/md'
-import { TiFilter } from 'react-icons/ti'
-import { FcOk,FcCancel,FcFactory } from 'react-icons/fc'
-import { GrFormSearch } from 'react-icons/gr'
+import { FcOk,FcCancel,FcFactory,FcPlus } from 'react-icons/fc'
+import { HiLockClosed} from 'react-icons/hi'
 
 export const activeData = [
     {
         id:1,
         number:10,
-        cases:"New Exchanges",
+        transaction:"New Exchanges",
         iconMain:"",
-        iconSmall:MdNewLabel,
-        color:"blue"
+        iconSmall:FcPlus,
+        color:"rgb(59, 130, 246)"
     },
     {
         id:2,
         number:25,
-        cases:"Active Exchanges",
+        transaction:"Active Exchanges",
         iconMain:FcFactory,
         iconSmall:FcOk,
         color:"green"
@@ -30,7 +29,7 @@ export const activeData = [
     {
         id:3,
         number:10,
-        cases:"Canceled Exchanges",
+        transaction:"Canceled Exchanges",
         iconMain:FcFactory,
         iconSmall:FcCancel,
         color:"red"
@@ -38,9 +37,9 @@ export const activeData = [
     {
         id:4,
         number:10,
-        cases:"Closed Exchanges",
+        transaction:"Closed Exchanges",
         iconMain:FcFactory,
-        iconSmall:"",
+        iconSmall:HiLockClosed,
         color:"gray"
     },
 ]

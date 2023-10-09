@@ -1,0 +1,37 @@
+.header__card{
+    width: 160px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 15px 20px;
+margin: 8px 5px;
+}
+.header__card-items{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.header__item-amount{
+font-size: 30px;
+font-weight: 700;
+padding: 0;
+margin-right: 6px;
+}
+.header__card-item{
+    font-size: 12px;
+    font-weight: 600;
+    width: 30px;
+    align-self: flex-end;
+    color: gray;
+    /* border: 2px solid yellowgreen; */
+}
+.header__card-icons{
+    display: flex;
+justify-content: center;
+align-items: flex-start;
+}
+.small-icon{
+    justify-self: flex-end;
+    margin-right: -20px;
+}

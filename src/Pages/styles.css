@@ -1,3 +1,91 @@
 .home{
     width: 80%;
 }
+.home__header{
+width: 100%;
+padding: 10px 15px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-wrap: wrap;
+}
+
+.home__search-container{
+display: flex;
+justify-content: flex-end;
+align-items: center;
+}
+.home__search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid lightgray;
+    width: 200px;
+    padding: 3px 0;
+    background-color: #fff;
+}
+.home__search-input{
+   width: 100%; 
+   outline: none;
+   border: none;
+}
+.home__search-icon{
+    background-color: #fff;
+    border: 1px solid lightgray;
+    padding: 2px 3px;
+    margin-left: 13px;
+}
+
+
+
+/* ==============================LOGIN STYLES =================================== */
+
+.login{
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+}
+.login__page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+}
+.form-group{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+.input__group{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.input__group label{
+    margin: 10px 0;
+    color: rgb(3, 3, 53);
+    font-weight: 500;
+}
+.login__input{
+width: 100%;
+padding: 10px 20px;
+outline: none;
+border: 1px solid rgb(155, 146, 146);
+border-radius: 10px;
+
+}
+.login__btn{
+padding: 10px 20px;
+color: #fff;
+background-color: rgb(3, 3, 53);
+border-radius: 10px;
+margin-top: 10px;
+}
