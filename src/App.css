@@ -1,13 +1,17 @@
 .app{
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
-/* .sidebar{
+.sidebar{
   width: 150px;
-
-  padding: 20px 10px;
-} */
+}
 .main{
-  flex: 1;
+  border: 2px solid yellowgreen;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
 }

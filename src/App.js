@@ -1,41 +1,38 @@
-import React, { useState,useRef } from 'react'
+import React, { useState,useRef,useEffect } from 'react'
 import './App.css';
-import { Sidebar} from './components/index';
+import { Sidebar, Navbar } from './components/index';
+import { Routes, Route,useLocation} from 'react-router-dom'
+import HomePage from './Pages/HomePage';
+import { getCurrentLocation } from './utils/utils';
+
 
 function App() {
-  const [toggleWidth, setToggleWidth] = useState(false);
-  const mainWidthRef = useRef()
+  const [active, setActive] = useState(false)
+  const [currentLocation, setCurrentLocation] = useState()
+  const mainWidthRef = useRef();
+  const location =useLocation();
+  console.log(currentLocation)
 
-  const changeWidth = () => {
-    mainWidthRef.current.style.width = "50px";
-    mainWidthRef.current.style.transition = "width ease 0.31s";
-    // mainApp.current.style.left = "0%";
-    // mainApp.current.style.transition = "left ease 0.31s";
-  };
-  const prevWidth = () => {
-    mainWidthRef.current.style.width = "150px";
-    mainWidthRef.current.style.transition = "width ease 0.31s";
-    // mainApp.current.style.left = "-50%";
-    // mainApp.current.style.transition = "left ease 0.31s";
-  };
-console.log(mainWidthRef.current)
-  const handleActive = () => {
-    if (toggleWidth) {
-      changeWidth();
-      setToggleWidth((prev) => !prev);
-    } else {
-      prevWidth();
-      setToggleWidth((prev) => !prev);
-    }
-  };
+  useEffect(() => {
+   setCurrentLocation(getCurrentLocation(location.pathname))
+  }, [location.pathname])
+  
 
+
+
+const toggleActiveState = () => {
+  setActive(!active)
+}
   return (
     <div className="app">
       <div className="sidebar" ref={mainWidthRef}>
-       <Sidebar handleActive={handleActive} toggle={toggleWidth}/>
+       <Sidebar setActive={toggleActiveState} active={active}/>
       </div>
       <div className="main">
-        main
+       <Navbar active={active} setActive={toggleActiveState} currentLocation={currentLocation}/>
+       <Routes>
+        <Route exact path="/" element={<HomePage />}/>
+      </Routes>
       </div>
     </div>
   );

@@ -16,35 +16,39 @@ export const activeData = [
         number:10,
         cases:"New Exchanges",
         iconMain:"",
-        iconSmall:MdNewLabel
+        iconSmall:MdNewLabel,
+        color:"blue"
     },
     {
         id:2,
         number:25,
         cases:"Active Exchanges",
         iconMain:FcFactory,
-        iconSmall:FcOk
+        iconSmall:FcOk,
+        color:"green"
     },
     {
         id:3,
         number:10,
         cases:"Canceled Exchanges",
         iconMain:FcFactory,
-        iconSmall:FcCancel
+        iconSmall:FcCancel,
+        color:"red"
     },
     {
         id:4,
         number:10,
         cases:"Closed Exchanges",
         iconMain:FcFactory,
-        iconSmall:""
+        iconSmall:"",
+        color:"gray"
     },
 ]
  export const sidebarData = [
     {
         id:1,
-        link:"/exchange",
-        title:"Exchange",
+        link:"/",
+        title:"Exchanges",
         icon:SiFacebookgaming
     },
     {
@@ -61,7 +65,7 @@ export const activeData = [
     },
     {
         id:4,
-        link:"/",
+        link:"/home",
         title:"Home",
         icon:IoHomeSharp
     },
@@ -73,7 +77,7 @@ export const activeData = [
     },
     {
         id:6,
-        link:"/",
+        link:"/notes",
         title:"Notes",
         icon:ImFileText
     },

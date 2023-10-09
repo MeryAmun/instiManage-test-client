@@ -1,10 +1,87 @@
+/* =========================================NAVBAR STYLES============================================== */
+.navbar__container{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 15px;
+    border: none;
+}
+.navbar{
+    height: 40px;
+    width: 100%;
+    margin: 10px 15px;
+    padding: 5px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.navbar__user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+.user__block{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center; 
+    /* border: 2px solid yellowgreen; */
+    margin: 0 10px;
+}
+span,
+select{
+    border: none;
+    outline: none;
+    font-size: 12px;
+    font-weight: 500;
+}
+.user{
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    margin: 0 10px;
+}
+
+.navbar__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    width: 100%;
+    }
+    .navbar__title{
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .navbar__btn{
+        font-size: 13px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =============================================SIDEBAR STYLES======================================= */
 .sidebar{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     height: 100vh;
-   
     align-items: center;
 }
 
@@ -14,16 +91,25 @@
     position: fixed;
     top: 0;
     left: 0px;
-    z-index: 1036;
+    /* z-index: 1036; */
     overflow-y: hidden;
     background-color: rgb(3, 3, 53);
     box-shadow: 0 8px 20px -8px lightgray;
     align-items: center;
    padding: 20px;
    transition: width ease 0.31s;
+   border-top-right-radius: 20px;
 }
 
 .sidebar__links:hover{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+    width:140px;
+}
+.sidebar__links-active{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
