@@ -6,3 +6,6 @@ A git console prompt will open up, type git clone, pase the link and click the e
 Now open eith a command prompt or if you are using VS Code, open terminal and navigate to the project root directory.
 run npm install to get all project dependencies install.
 Finally, run npm start to and have fun :)
+[front.webm](https://github.com/MeryAmun/instiManage-test-client/assets/64750691/f9c47c63-0385-4dca-b3be-6c52f87b01c5)
+[mobile.webm](https://github.com/MeryAmun/instiManage-test-client/assets/64750691/570e311d-1efb-4123-86f3-66a1bc6c14de)
+[database.webm](https://github.com/MeryAmun/instiManage-test-client/assets/64750691/1c62416f-928d-4e4b-b776-ac5115940494)
