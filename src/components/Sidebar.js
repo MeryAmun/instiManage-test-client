@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { sidebarData } from "../data";
 import "./styles.css";
 
-const Sidebar = ({ active, handleActive }) => {
+const Sidebar = ({ active, setActive }) => {
   const [activeId, setActiveId] = useState(null);
 
   return (
     <div className="sidebar">
-      <div className={ active ? "sidebar__links" : "sidebar__links sidebar__links-active"}>
-        <div className="sidebar__logo" onClick={handleActive}>
-          <h4>LOGO</h4>
+      <div className={ active ? "sidebar__links" : "sidebar__links-active"}>
+        <div className="sidebar__logo" onClick={setActive}>
+          <h4>CLOSE</h4>
         </div>
         {sidebarData.map((item) => (
           <div
@@ -25,6 +25,7 @@ const Sidebar = ({ active, handleActive }) => {
                   ? "sidebar__link sidebar__link-title-active"
                   : "sidebar__link sidebar__link-title"
               }
+              
             >
               {
                 <item.icon

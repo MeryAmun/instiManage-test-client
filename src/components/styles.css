@@ -7,6 +7,7 @@
     align-items: center;
     padding: 5px 15px;
     border: none;
+    
 }
 .navbar{
     height: 40px;
@@ -91,10 +92,33 @@ select{
     justify-content: center;
     height: 100vh;
     align-items: center;
+    transition: width ease 0.31s;
 }
 
+.sidebar__logo{
+    margin: 30px 0;
+}
 .sidebar__links{
-    width: 27px;
+    width: 40px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0%;
+    /* z-index: 1036; */
+    overflow-y: hidden;
+    background-color: rgb(3, 3, 53);
+    box-shadow: 0 8px 20px -8px lightgray;
+    align-items: center;
+   padding: 20px;
+   transition: width ease 0.31s;
+   transition: left ease 0.31s;
+   border-top-right-radius: 20px;
+}
+
+.sidebar__links:hover{
+    width:140px;
+}
+.sidebar__links-active{
     height: 100vh;
     position: fixed;
     top: 0;
@@ -106,23 +130,8 @@ select{
     align-items: center;
    padding: 20px;
    transition: width ease 0.31s;
+   transition: opacity ease 0.31s;
    border-top-right-radius: 20px;
-}
-
-.sidebar__links:hover{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    height: 100%;
-    width:140px;
-}
-.sidebar__links-active{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    height: 100%;
     width:140px;
 }
 
@@ -183,3 +192,41 @@ color: #f24443;
     color: rgb(255, 255, 255);
    
 }
+
+@media screen and (max-width:570px){
+    .sidebar__links{
+       left: -50%;
+      
+        
+    }
+}
+/* ===================================================TABLE STYLES==================================================== */
+.table__actions{
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    gap: 10px;
+}
+
+.table__status{
+    display: block;
+   
+
+}
+.active_user{
+    color: green;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    font-weight: 500;
+
+}
+.new_user{
+    color: gray;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+
+}
+
+

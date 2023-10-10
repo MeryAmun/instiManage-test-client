@@ -1,46 +1,37 @@
-import  React, { useState ,useMemo} from 'react';
-import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import { visuallyHidden } from '@mui/utils';
+import React, { useState, useMemo } from "react";
+import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import Paper from "@mui/material/Paper";
+import Checkbox from "@mui/material/Checkbox";
+import { visuallyHidden } from "@mui/utils";
+import { MdEditNote, MdDelete } from "react-icons/md";
+import { BiRadioCircle } from "react-icons/bi";
+// import { BsThreeDots } from 'react-icons/bs'
+import { Link } from "react-router-dom";
 
-
-
-const TableCard = ()  => {
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('exchangeNumber');
+const TableCard = ({ data }) => {
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("exchangeNumber");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
-  const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = data.map((n) => n.exchanger);
       setSelected(newSelected);
       return;
     }
@@ -60,7 +51,7 @@ const TableCard = ()  => {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
 
@@ -76,34 +67,36 @@ const TableCard = ()  => {
     setPage(0);
   };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
-
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
   const visibleRows = useMemo(
     () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
+      stableSort(data, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage,
+        page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage],
+    [order, orderBy, page, rowsPerPage, data]
   );
 
+  const handleDelete = (id) => {
+    fetch(`http://localhost:7000/app-v1/exchange/${id}`, {
+      method: "DELETE",
+    }).then((res) => res.json());
+    //window.location.reload()
+  };
+
   return (
-    <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+    <Box sx={{ width: "100%" }}>
+      <Paper sx={{ width: "100%", mb: 2 }}>
         <TableContainer>
           <Table
-            sx={{ minWidth: 750 }}
+            sx={{ minWidth: "100%" }}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
+            size="small"
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -111,7 +104,7 @@ const TableCard = ()  => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={data.length}
             />
             <TableBody>
               {visibleRows.map((row, index) => {
@@ -121,46 +114,75 @@ const TableCard = ()  => {
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.name)}
+                    onClick={(event) => handleClick(event, row.exchangeNumber)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.name}
+                    key={row._id}
                     selected={isItemSelected}
-                    sx={{ cursor: 'pointer' }}
+                    sx={{ cursor: "pointer" }}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
                         color="primary"
                         checked={isItemSelected}
                         inputProps={{
-                          'aria-labelledby': labelId,
+                          "aria-labelledby": labelId,
                         }}
                       />
                     </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
-                      {row.name}
+                    <TableCell align="center" style={{ fontSize: "11px" }}>
+                      {row.exchangeNumber}
                     </TableCell>
-                    <TableCell align="right">{row.exchangeNumber}</TableCell>
-                    <TableCell align="right">{row.exchanger}</TableCell>
-                    <TableCell align="right">{row.OpenDate}</TableCell>
-                    <TableCell align="right">{row.closeDate}</TableCell>
-                    <TableCell align="right">{row.lastModifiedDate}</TableCell>
-                    <TableCell align="right">{row.accountBalance}</TableCell>
-                    <TableCell align="right">{row.status}</TableCell>
-                    <TableCell align="right">{row.actions}</TableCell>
+                    <TableCell align="center" style={{ fontSize: "11px" }}>
+                      {row.exchanger}
+                    </TableCell>
+                    <TableCell align="center" style={{ fontSize: "11px" }}>
+                      {row.openDate}
+                    </TableCell>
+                    <TableCell align="center" style={{ fontSize: "11px" }}>
+                      {row.closeDate}
+                    </TableCell>
+                    <TableCell align="center" style={{ fontSize: "11px" }}>
+                      {row.lastModifiedDate}
+                    </TableCell>
+                    <TableCell align="center" style={{ fontSize: "11px" }}>
+                      ${row.accountBalance}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      style={{ fontSize: "11px" }}
+                      className="table__status"
+                    >
+                      <BiRadioCircle
+                        size={15}
+                        color={row.status === "Active" ? "green" : "gray"}
+                      />
+                      <span
+                        className={
+                          row.status === "Active" ? "active_user" : "new_user"
+                        }
+                      >
+                        {row.status}
+                      </span>
+                    </TableCell>
+                    <TableCell align="center" className="table__actions">
+                      <Link to="/edit-exchange/" state={row}>
+                        <MdEditNote size={20} color="gray" />
+                      </Link>
+                      <MdDelete
+                        size={20}
+                        color="gray"
+                        onClick={() => handleDelete(row._id)}
+                      />{" "}
+                    </TableCell>
                   </TableRow>
                 );
               })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows,
+                    height: 35 * emptyRows,
                   }}
                 >
                   <TableCell colSpan={6} />
@@ -172,232 +194,157 @@ const TableCard = ()  => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={data.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
     </Box>
   );
-}
-export default TableCard
+};
+export default TableCard;
 
-function createData( exchangeNumber, exchanger, OpenDate, closeDate,lastModifiedDate,accountBalance,status,actions) {
-    return {
-      exchangeNumber,
-      exchanger,
-      OpenDate,
-      closeDate,
-      lastModifiedDate,
-      accountBalance,
-      status,
-      actions,
-    };
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
   }
-  
-  const rows = [
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Donut', 452, 25.0, 51, 4.9),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-    createData('Honeycomb', 408, 3.2, 87, 6.5),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Jelly Bean', 375, 0.0, 94, 0.0),
-    createData('KitKat', 518, 26.0, 65, 7.0),
-    createData('Lollipop', 392, 0.2, 98, 0.0),
-    createData('Marshmallow', 318, 0, 81, 2.0),
-    createData('Nougat', 360, 19.0, 9, 37.0),
-    createData('Oreo', 437, 18.0, 63, 4.0),
-  ];
-  
-  function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === "desc"
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) {
+      return order;
     }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  }
-  
-  function getComparator(order, orderBy) {
-    return order === 'desc'
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  }
-  
-  // Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-  // stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-  // only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-  // with exampleArray.slice().sort(exampleComparator)
-  function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) {
-        return order;
-      }
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-  }
-  
-  const headCells = [
-    {
-      id: 'exchangeNumber',
-      numeric: true,
-      disablePadding: true,
-      label: 'EXCHANGE NUMBER',
-    },
-    {
-      id: 'exchanger',
-      numeric: false,
-      disablePadding: false,
-      label: 'EXCHANGER',
-    },
-    {
-      id: 'openDate',
-      numeric: false,
-      disablePadding: false,
-      label: 'OPEN DATE',
-    },
-    {
-      id: 'closeDate',
-      numeric: false,
-      disablePadding: false,
-      label: 'CLOSE DATE',
-    },
-    {
-      id: 'lastModifiedDate',
-      numeric: false,
-      disablePadding: false,
-      label: 'LAST MODIFIED DATE',
-    },
-    {
-      id: 'accountBalance',
-      numeric: true,
-      disablePadding: false,
-      label: 'ACCOUNT BALANCE',
-    },
-    {
-      id: 'status',
-      numeric: false,
-      disablePadding: false,
-      label: 'STATUS',
-    },
-    {
-      id: 'actions',
-      numeric: false,
-      disablePadding: false,
-      label: 'ACTIONS',
-    },
-  ];
-  
-  function EnhancedTableHead(props) {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-      props;
-    const createSortHandler = (property) => (event) => {
-      onRequestSort(event, property);
-    };
-  
-    return (
-      <TableHead>
-        <TableRow>
-          <TableCell padding="checkbox">
-            <Checkbox
-              color="primary"
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={rowCount > 0 && numSelected === rowCount}
-              onChange={onSelectAllClick}
-              inputProps={{
-                'aria-label': 'select all desserts',
-              }}
-            />
-          </TableCell>
-          {headCells.map((headCell) => (
-            <TableCell
-              key={headCell.id}
-              align={headCell.numeric ? 'right' : 'left'}
-              padding={headCell.disablePadding ? 'none' : 'normal'}
-              sortDirection={orderBy === headCell.id ? order : false}
-            >
-              <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : 'asc'}
-                onClick={createSortHandler(headCell.id)}
-              >
-                {headCell.label}
-                {orderBy === headCell.id ? (
-                  <Box component="span" sx={visuallyHidden}>
-                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                  </Box>
-                ) : null}
-              </TableSortLabel>
-            </TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
-    );
-  }
-  
-  EnhancedTableHead.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
-    onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-    orderBy: PropTypes.string.isRequired,
-    rowCount: PropTypes.number.isRequired,
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
+
+const headCells = [
+  {
+    id: "exchangeNumber",
+    numeric: true,
+    disablePadding: false,
+    label: "NUMBER",
+  },
+  {
+    id: "exchanger",
+    numeric: false,
+    disablePadding: false,
+    label: "EXCHANGER",
+  },
+  {
+    id: "openDate",
+    numeric: false,
+    disablePadding: false,
+    label: "OPEN DATE",
+  },
+  {
+    id: "closeDate",
+    numeric: false,
+    disablePadding: false,
+    label: "CLOSE DATE",
+  },
+  {
+    id: "lastModifiedDate",
+    numeric: false,
+    disablePadding: false,
+    label: "MODIFIED DATE",
+  },
+  {
+    id: "accountBalance",
+    numeric: true,
+    disablePadding: false,
+    label: "ACCOUNT BALANCE",
+  },
+  {
+    id: "status",
+    numeric: false,
+    disablePadding: false,
+    label: "STATUS",
+  },
+  {
+    id: "actions",
+    numeric: false,
+    disablePadding: false,
+    label: "ACTIONS",
+  },
+];
+
+function EnhancedTableHead(props) {
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+  } = props;
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
   };
-  
-  function EnhancedTableToolbar(props) {
-    const { numSelected } = props;
-  
-    return (
-      <Toolbar
-        sx={{
-          pl: { sm: 2 },
-          pr: { xs: 1, sm: 1 },
-          ...(numSelected > 0 && {
-            bgcolor: (theme) =>
-              alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-          }),
-        }}
-      >
-        {numSelected > 0 ? (
-          <Typography
-            sx={{ flex: '1 1 100%' }}
-            color="inherit"
-            variant="subtitle1"
-            component="div"
+
+  return (
+    <TableHead>
+      <TableRow>
+        <TableCell padding="checkbox">
+          <Checkbox
+            color="primary"
+            indeterminate={numSelected > 0 && numSelected < rowCount}
+            checked={rowCount > 0 && numSelected === rowCount}
+            onChange={onSelectAllClick}
+            inputProps={{
+              "aria-label": "select all desserts",
+            }}
+          />
+        </TableCell>
+        {headCells.map((headCell) => (
+          <TableCell
+            style={{ fontSize: "11px" }}
+            key={headCell.id}
+            align={headCell.numeric ? "right" : "left"}
+            padding={headCell.disablePadding ? "none" : "normal"}
+            fontSize="11px"
+            sortDirection={orderBy === headCell.id ? order : false}
           >
-            {numSelected} selected
-          </Typography>
-        ) : null}
-  
-        {numSelected > 0 ? (
-          <Tooltip title="Delete">
-            <IconButton>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="Filter list">
-            <IconButton>
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
-      </Toolbar>
-    );
-  }
-  
-  EnhancedTableToolbar.propTypes = {
-    numSelected: PropTypes.number.isRequired,
-  };
+            <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : "asc"}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+              {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
+                </Box>
+              ) : null}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  );
+}
+
+EnhancedTableHead.propTypes = {
+  numSelected: PropTypes.number.isRequired,
+  onRequestSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
+  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+  orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired,
+};

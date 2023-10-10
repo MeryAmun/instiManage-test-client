@@ -3,7 +3,6 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { FcFactory } from 'react-icons/fc'
 import './headerCard.css'
-import { ImInsertTemplate } from 'react-icons/im';
 
 const HeaderCard = ({data}) => {
   return (

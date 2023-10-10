@@ -33,9 +33,9 @@ const Navbar = ({ active, setActive, currentLocation }) => {
           )}
         </div>
         <div className="navbar__user">
-          <BsFillBellFill color="rgb(3, 3, 53)" size={20} />
+          <BsFillBellFill color="rgb(3, 3, 53)" size={15} />
           <div className="user">
-            <FaUserCircle color="rgb(3, 3, 53)" size={25} />
+            <FaUserCircle color="rgb(3, 3, 53)" size={15} />
             <div className="user__block">
               <select name="" id="">
                 <option value="name">John Thomson</option>
@@ -51,7 +51,7 @@ const Navbar = ({ active, setActive, currentLocation }) => {
           currentLocation ==="Exchanges" && (
             <Link  to="/create-exchange"  className="navbar__btn">
           <TiPlus size={20} color="#fff" />
-          {currentLocation}
+          New {currentLocation}
         </Link>
           )
         }
